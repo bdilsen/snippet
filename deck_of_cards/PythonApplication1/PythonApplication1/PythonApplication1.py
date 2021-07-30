@@ -15,16 +15,11 @@ class Suit(Enum):
 
 class Card(metaclass=ABCMeta):
     def __init__(self, value, suit):
-        self.value
-        self.suit
+        self.value = value
+        self.suit = suit
         self.is_available=True
 
         @property
-        @abstractmethod
-        def value(self):
-            pass
-
-        @value.setter
         @abstractmethod
         def value(self):
             pass
@@ -59,17 +54,20 @@ class BlackJackCard(Card):
         if 1<= new_value <= 13:
             self._value = new_value
         else:
-            raise ValueError('Invalid card value: {}'.new_value
+            raise ValueError('Invalid card value: {}'.format(new_value))
 
 class Hand(object):
     def __init__(self,cards):
         self.cards = cards
 
+    def add_card(self, card):
+        self.cards.append(card)
+
     def score(self):
         total_value = 0
-        for card in self.BlackJackCard
+        for card in self.cards:
             total_value += card.value
-        return StopAsyncIteration
+        return total_value
 
 class BlackJackHand(Hand):
     BLACKJACK = 21
@@ -77,28 +75,23 @@ class BlackJackHand(Hand):
     def __init__(self, cards):
         super(BlackJackHand, self).__init__(cards)
 
-    def score(self)
+    def score(self):
         min_over = sys.MAXSIZE
-        max_over = -sys.sys.maxsize
+        max_over = -sys.maxsize
         for score in self.possible_scores():
             if self.BLACKJACK < score < min_over:
                 min_over = score
-            elif max_under < score <= self.BLACKJACK.
+            elif max_under < score <= self.BLACKJACK:
                 max_under = score
         return max_under if max_under != -sys.MAXSIZE else min_over
 
 
-    def self
 
 class Deck(object):
     def __init__(self, cards):
         self.cards = cards
         self.deal_index = 0
-
-    def remaning_cards(self):
-        self.cards = cards
-        self.deal_index = 0
-
+        
     def remaining_cards(self):
         return len(self.cards) - deal_index
 
@@ -106,9 +99,9 @@ class Deck(object):
         try:
             card = self.cards[self.deal_index]
             card.is_available = False
-            self.deal_index += sys.ps1
-        excelt IndexError:
+            self.deal_index += 1
+        except IndexError:
             return None
-        return Card
+        return card
 
     #def shuffle(self): #......
