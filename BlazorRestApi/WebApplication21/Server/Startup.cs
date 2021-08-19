@@ -18,6 +18,7 @@ namespace WebApplication21.Server
 			Configuration = configuration;
 		}
 
+
 		public IConfiguration Configuration { get; }
 
 		// This method gets called by the runtime. Use this method to add services to the container.
@@ -26,6 +27,12 @@ namespace WebApplication21.Server
 		{
 			services.AddDbContext<AppDbContext>(options =>
 options.UseSqlServer(Configuration.GetConnectionString("DBConnection")));
+
+			services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+			services.AddScoped<IEmployeeRepository,EmployeeRepository>();
+
+
+
 			services.AddControllersWithViews();
 			services.AddRazorPages();
 		}

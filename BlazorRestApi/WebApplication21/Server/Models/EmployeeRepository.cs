@@ -16,6 +16,11 @@ namespace WebApplication21.Server.Models
 
 		public async Task<Employee> AddEmployee(Employee employee)
 		{
+if(employee.Department != null)
+{
+				appDbContext.Entry(employee.Department).State = EntityState.Unchanged;
+			}
+
 			var result = await appDbContext.Employees.AddAsync(employee);
 			await appDbContext.SaveChangesAsync();
 			return result.Entity;
