@@ -20,8 +20,8 @@ namespace WebApplication21.Server.Controllers
 		}
 
 		[HttpGet]
-		public async Task<ActionResult<Employee >> CreateEmployee(Employee employee)
-{
+		public async Task<ActionResult<Employee>> CreateEmployee(Employee employee)
+		{
 			try
 			{
 				if (employee == null)
@@ -34,6 +34,24 @@ namespace WebApplication21.Server.Controllers
 			catch (Exception)
 			{
 				return StatusCode(StatusCodes.Status500InternalServerError, "Error creating new employee record");
+			}
+		}
+
+		[HttpGet("{search}")]
+		public async Task<ActionResult<IEnumerable<Employee>>> Search(string name, Gender? gender)
+		{
+			try
+			{
+				var result = await employeeRepository.Search(name, gender);
+				if (result.Any())
+				{
+					return Ok(result);
+				}
+				return NotFound();
+			}
+			catch (Exception)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from the database");
 			}
 		}
 
